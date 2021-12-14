@@ -646,20 +646,19 @@ function day4() {
 
     const map = new Map();
 
-    let temp = ''
-    let temp2 = ''
+    let tl2br = ''
+    let tr2bl = ''
     for (let y = 0; y < width; y++) {
       if (martix[y].join('') === bingo) return true;
 
-      temp += martix[y][y];
-      temp2 += martix[y][width - y];
+      tl2br += martix[y][y];
+      tr2bl += martix[y][width - y];
 
       for (let x = 0; x < width; x++) {
         map.set(x, (map.get(x) || '') + martix[y][x])
       }
     }
-    if (temp === bingo) return true;
-    if (temp2 === bingo) return true;
+    if (tl2br === bingo || tr2bl === bingo) return true;
 
     const col = Array.from(map).findIndex(([_, ret]) => ret === bingo);
 
