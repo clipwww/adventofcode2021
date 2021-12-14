@@ -646,19 +646,20 @@ function day4() {
 
     const map = new Map();
 
-    let tl2br = ''
-    let tr2bl = ''
+    // let tl2br = ''
+    // let tr2bl = ''
     for (let y = 0; y < width; y++) {
       if (martix[y].join('') === bingo) return true;
 
-      tl2br += martix[y][y];
-      tr2bl += martix[y][width - y];
+      // tl2br += martix[y][y];
+      // tr2bl += martix[y][width - y - 1];
 
       for (let x = 0; x < width; x++) {
         map.set(x, (map.get(x) || '') + martix[y][x])
       }
     }
-    if (tl2br === bingo || tr2bl === bingo) return true;
+    // console.log(tl2br, tr2bl)
+    // if (tl2br === bingo || tr2bl === bingo) return true;
 
     return Array.from(map).some(([_, ret]) => ret === bingo);
   }
@@ -699,7 +700,7 @@ function day4() {
 
   function part2() {
     let martixArr = [...puzzleMartixArr];
-    
+
     let i = 0;
     while (i < orderNumbers.length) {
       const bingoNum = orderNumbers[i];

@@ -11,5 +11,8 @@
 - day3
   - ✅ part1
   - ✅ part2
+- day4
+  - ✅ part1
+  - ✅ part2
 
 
