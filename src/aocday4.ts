@@ -660,17 +660,13 @@ function day4() {
     }
     if (tl2br === bingo || tr2bl === bingo) return true;
 
-    const col = Array.from(map).findIndex(([_, ret]) => ret === bingo);
-
-    if (col >= 0) return true;
-
-    return false;
+    return Array.from(map).some(([_, ret]) => ret === bingo);
   }
 
 
   function part1() {
     const martixArr = [...puzzleMartixArr];
-    let result;
+
     let i = 0;
     while (i < orderNumbers.length) {
       const bingoNum = orderNumbers[i];
@@ -688,8 +684,7 @@ function day4() {
         const isBingo = checkBingo(martix);
 
         if (isBingo) {
-          result = +bingoNum * martix.reduce((sum, row) => sum + row.reduce((rowSum, cur) => isNaN(+cur) ? rowSum : rowSum + +cur, 0), 0);
-          console.log('part1', result)
+          console.log('part1', +bingoNum * martix.reduce((sum, row) => sum + row.reduce((rowSum, cur) => isNaN(+cur) ? rowSum : rowSum + +cur, 0), 0))
           return;
         }
       }
@@ -704,6 +699,7 @@ function day4() {
 
   function part2() {
     let martixArr = [...puzzleMartixArr];
+    
     let i = 0;
     while (i < orderNumbers.length) {
       const bingoNum = orderNumbers[i];
