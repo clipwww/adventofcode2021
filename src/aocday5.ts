@@ -516,94 +516,46 @@ function day5() {
   const puzzleArr = puzzle.split('\n').map(line => line.split(' -> ').map(point => point.split(',').map(pos => +pos)))
   // console.log(puzzleArr)
 
-  function handlePoint(arr: number[][], x: number, y: number): number[][] {
+  function handlePoint(map: Map<string, number>, key: string): void {
     // console.log(x, y)
-    if (!arr[y]) {
-      arr[y] = [];
-    }
-
-    if (!arr[y][x]) {
-      arr[y][x] = 1;
-    } else {
-      arr[y][x] += 1;
-    }
-
-    return arr;
+    const count = (map.get(key) || 0) + 1;
+    map.set(key, count);
   }
 
   function part1() {
-    let ret: number[][] = [];
+    const map = new Map();;
 
     puzzleArr.forEach(([[x1, y1], [x2, y2]]) => {
-      switch (true) {
-        case x1 === x2:
-          const yStart = y1 > y2 ? y2 : y1;
+      if (x1 !== x2 && y1 !== y2) return;
 
-          Array(Math.abs(y2 - y1) + 1).fill('').forEach((_, i) => {
-            ret = handlePoint(ret, x1, yStart + i)
-          })
-          break;
-        case y1 === y2:
-          const xStart = x1 > x2 ? x2 : x1;
+      let vector = Math.abs(x1 - x2) || Math.abs(y1 - y2)
+      const [vectorX, vectorY] = [(x2 - x1) / vector, (y2 - y1) / vector]
 
-          Array(Math.abs(x2 - x1) + 1).fill('').forEach((_, i) => {
-            ret = handlePoint(ret, xStart + i, y1)
-          })
-          break;
-        default:
-          break;
+
+      for (let x = x1, y = y1, i = 0; i <= vector; i++, x += vectorX, y += vectorY) {
+        handlePoint(map, `${x},${y}`)
       }
     })
 
-    // console.log(ret)
-
-    console.log('part1', ret.reduce((sum, row) => sum + row.filter(num => num >= 2).length, 0))
+    console.log('part1', Array.from(map).filter(([_, count]) => count >= 2).length);
   }
 
   part1();
 
   function part2() {
-    let ret: number[][] = [];
+    const map = new Map();;
 
     puzzleArr.forEach(([[x1, y1], [x2, y2]]) => {
-      // console.log('======', x1,y1,x2,y2, '======')
+      let vector = Math.abs(x1 - x2) || Math.abs(y1 - y2)
+      const [vectorX, vectorY] = [(x2 - x1) / vector, (y2 - y1) / vector]
 
-      switch (true) {
-        case x1 === y1 && x2 === y2:
-          const start = Math.abs(x1 - x2);
-          
-          Array(Math.abs(x1 - x2) + 1).fill('').forEach((_, i) => {
-            ret = handlePoint(ret, start - i, start - i)
-          })
-          break;
-        case (x1 === y2 && x2 === y1) || Math.abs(x1 - x2) === Math.abs(y1 - y2):
-          
-          Array(Math.abs(y2 - y1) + 1).fill('').forEach((_, i) => {
-            ret = handlePoint(ret, x1 + (x1 > x2 ? -i : i), y1 + (y1 > y2 ? -i : i))
-          })
-          break;
-        case x1 === x2:
-          const yStart = y1 > y2 ? y2 : y1;
 
-          Array(Math.abs(y2 - y1) + 1).fill('').forEach((_, i) => {
-            ret = handlePoint(ret, x1, yStart + i)
-          })
-          break;
-        case y1 === y2:
-          const xStart = x1 > x2 ? x2 : x1;
-
-          Array(Math.abs(x2 - x1) + 1).fill('').forEach((_, i) => {
-            ret = handlePoint(ret, xStart + i, y1)
-          })
-          break;
-        default:
-          break;
+      for (let x = x1, y = y1, i = 0; i <= vector; i++, x += vectorX, y += vectorY) {
+        handlePoint(map, `${x},${y}`)
       }
     })
 
-    // console.log(ret)
-
-    console.log('part2', ret.reduce((sum, row) => sum + row.filter(num => num >= 2).length, 0))
+    console.log('part1', Array.from(map).filter(([_, count]) => count >= 2).length);
   }
 
 
