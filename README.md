@@ -17,5 +17,8 @@
 - day5
   - ✅ part1
   - ✅ part2
+- day6
+  - ✅ part1
+  - ❗️ part2
 
 
